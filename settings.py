@@ -35,3 +35,22 @@ C_SIZE = 400
 DIRECTIONS = [(0, -1), (0, 1), (-1, 0), (1, 0)]
 MUTATE_RATE = 0.1
 
+# path
+# store_parent_path = "./tmp/"
+store_parent_path = "./tmp/v2/"
+
+def makeDirsExist():
+    import os
+    dirs = [
+        f"{store_parent_path}genes",
+        f"{store_parent_path}genes/all",
+        f"{store_parent_path}genes/best",
+        f"{store_parent_path}seed",
+    ]
+
+    for dir in dirs:
+        print(f"dir {dir}")
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+
+makeDirsExist()

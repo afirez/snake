@@ -35,7 +35,7 @@ class Main(Scene):
         n = 100
         size = 20
         for i in range(n):
-            genes_pth = os.path.join("../", "genes", "all", str(i))
+            genes_pth = os.path.join("../", f"{store_parent_path}genes", "all", str(i))
             with open(genes_pth, "r") as f:
                 genes = np.array(list(map(float, f.read().split())))
                 genes_list.append(genes)
@@ -950,7 +950,7 @@ class Test(Scene):
         n = 100
         size = 20
         for i in range(n):
-            genes_pth = os.path.join("../", "genes", "all", str(i))
+            genes_pth = os.path.join("../", f"{store_parent_path}genes", "all", str(i))
             with open(genes_pth, "r") as f:
                 genes = np.array(list(map(float, f.read().split())))
                 genes_list.append(genes)

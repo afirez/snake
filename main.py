@@ -25,7 +25,12 @@ class Individual:
         """Get the fitness of Individual."""
         game = Game([self.genes])
         self.score, self.steps, self.seed = game.play()
-        self.fitness = (self.score + 1 / self.steps) * 100000
+        # self.fitness = (self.score + 1 / self.steps) * 100000
+
+        self.fitness = (self.steps) + ((2**self.score) + (self.score**2.1)*500) - (((.25 * self.steps)**1.3) * (self.score**1.2))
+        # self._fitness = (self._frames) + ((2**self.score) + (self.score**2.1)*500) - (((.25 * self._frames)) * (self.score))
+        self.fitness = max(self.fitness, .1)
+
 
 class GA:
     """Genetic Algorithm.
@@ -55,7 +60,7 @@ class GA:
     def inherit_ancestor(self):
         """Load genes from './genes/all/{i}', i: the ith individual."""
         for i in range(self.p_size):
-            pth = os.path.join("genes", "all", str(i))
+            pth = os.path.join(f"{store_parent_path}genes", "all", str(i))
             with open(pth, "r") as f:
                 genes = np.array(list(map(float, f.read().split())))
                 self.population.append(Individual(genes))
@@ -120,11 +125,11 @@ class GA:
     def save_best(self):
         """Save the best individual that can get #score score so far."""
         score = self.best_individual.score
-        genes_pth= os.path.join("genes", "best", str(score))
+        genes_pth= os.path.join(f"{store_parent_path}genes", "best", str(score))
         with open(genes_pth, "w") as f:
             for gene in self.best_individual.genes:
                 f.write(str(gene) + " ") 
-        seed_pth = os.path.join("seed", str(score))
+        seed_pth = os.path.join(f"{store_parent_path}seed", str(score))
         with open(seed_pth, "w") as f:
             f.write(str(self.best_individual.seed)) 
 
@@ -134,7 +139,7 @@ class GA:
             individual.get_fitness()
         population = self.elitism_selection(self.p_size)
         for i in range(len(population)):
-            pth = os.path.join("genes", "all", str(i))
+            pth = os.path.join(f"{store_parent_path}genes", "all", str(i))
             with open(pth, "w") as f:
                 for gene in self.population[i].genes:
                     f.write(str(gene) + " ") 

@@ -248,11 +248,11 @@ def play_best(score):
     Args:
         score: Specify which individual's genes to load, also indicates the highest score it can get.
     """
-    genes_pth = os.path.join("genes", "best", str(score))
+    genes_pth = os.path.join(f"{store_parent_path}genes", "best", str(score))
     with open(genes_pth, "r") as f:
         genes = np.array(list(map(float, f.read().split())))
 
-    seed_pth = os.path.join("seed", str(score))  # Get the seed for reproduction.
+    seed_pth = os.path.join(f"{store_parent_path}seed", str(score))  # Get the seed for reproduction.
     with open(seed_pth, "r") as f:
         seed = int(f.read())
 
@@ -266,7 +266,7 @@ def play_all(n=P_SIZE):
     """
     genes_list = []
     for i in range(n):
-        genes_pth = os.path.join("genes", "all", str(i))
+        genes_pth = os.path.join(f"{store_parent_path}genes", "all", str(i))
         with open(genes_pth, "r") as f:
             genes = np.array(list(map(float, f.read().split())))
         genes_list.append(genes)
@@ -275,5 +275,5 @@ def play_all(n=P_SIZE):
     game.play()
 
 if __name__ == '__main__':
-    play_all(100)
-    #play_best(292)
+    # play_all(100)
+    play_best(99)
